@@ -76,4 +76,26 @@ body {
   background: rgba(0, 0, 0, 0.8);
   padding: 3rem;
   font-size: 2rem;
+  z-index: 9999;
+}
+#qa_display {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7); /* semi-transparent dark background */
+  z-index: 9998; /* make sure it's on top of everything */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qa_content {
+  background: white;
+  color: black;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 80%;
+  text-align: center;
 }

@@ -10,6 +10,7 @@ document.getElementById('jsonLoader').addEventListener('change', function (e) {
     renderBoard();
     renderScoreboard();
     updateTurnDisplay();
+    document.getElementById('jsonLoader').style.display = 'none';
   };
   reader.readAsText(e.target.files[0]);
 });
@@ -18,7 +19,7 @@ function renderBoard(){
   const board = document.getElementById('board');
   board.innerHTML = '';
 
-  gameData.board.forEach(category => {
+  gameData.board.forEach((category, cat_index) => {
     const categoryColumn = document.createElement('div');
     categoryColumn.classList.add('category_column');
 
@@ -28,12 +29,12 @@ function renderBoard(){
     categoryHeader.textContent = category.category_name;
     categoryColumn.appendChild(categoryHeader);
     
-    category.questions.forEach((q, index) => {
+    category.questions.forEach((q, q_index) => {
         const tileButton = document.createElement('button');
         tileButton.classList.add('question_tile');
-        tileButton.textContent = `${(index + 1) * 100}`; // 100, 200, etc.
-        tileButton.dataset.category = category.category_name;
-        tileButton.dataset.index = index;
+        tileButton.textContent = `${(q_index + 1) * 100}`; // 100, 200, etc.
+        tileButton.dataset.cat_index = cat_index;
+        tileButton.dataset.q_index = q_index;
         tileButton.addEventListener('click', questionAnswer);
         categoryColumn.appendChild(tileButton);
     });
@@ -55,16 +56,64 @@ function updateTurnDisplay() {
     document.getElementById("turnDisplay").classList.remove("hidden_element");
 }
 
-function questionAnswer(e){
+async function questionAnswer(e){
     const display = document.getElementById("qa_display");
     const tile = e.target;
     tile.disabled = true;
-    const cat = tile.dataset.category
-    const index = tile.dataset.index
-
-    const questionObj = gameData.board[cat].questions[index];
-    display.innerText = questionObj.question
-
+    const cat_index = tile.dataset.cat_index
+    const q_index = tile.dataset.q_index
+    display.style.display = 'flex';
+    currQuestionObj = gameData.board[cat_index].questions[q_index];
+    console.log(currQuestionObj);
+    document.getElementById('qa_question').innerText = currQuestionObj.question;
+    startTimer(gameData.timer);
     currentPlayerIndex = (currentPlayerIndex + 1) % gameData.players.length;
     updateTurnDisplay();
+}
+
+function startTimer(seconds) {
+  clearInterval(timerInterval); // Clear any existing timer
+  const timerEl = document.getElementById("timer");
+  let timeLeft = seconds;
+
+  // Initial display
+  timerEl.innerText = `Time left: ${timeLeft}s`;
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      timerEl.innerText = "Time's up!";
+      timesUP(); // Call your custom function
+    } else {
+      timerEl.innerText = `Time left: ${timeLeft}s`;
+    }
+  }, 1000);
+}
+
+function timesUP() {
+  alert("Time's up! You will recieve no points!");
+  closeQA();
+}
+
+
+function closeQA (){
+  document.getElementById('qa_answer').innerText = "";
+  document.getElementById('qa_question').innerText = currQuestionObj.answer;
+  document.getElementById("wrong_button").style.display = 'none';
+  document.getElementById("correct_button").style.display = 'none';
+  document.getElementById("qa_display").style.display = 'none';
+}
+
+function showAnswer(){
+  clearInterval(timerInterval); // stop timer
+  document.getElementById("timer").innerText = ""; //clear timer
+  document.getElementById('qa_answer').innerText = currQuestionObj.answer;
+  document.getElementById("wrong_button").style.display = 'flex';
+  document.getElementById("correct_button").style.display = 'flex';
+}
+
+function correctAnswer() {
+
 }

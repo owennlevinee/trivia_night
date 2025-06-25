@@ -1,0 +1,94 @@
+{
+  "players": [
+    {
+      "name": "test",
+      "score": 0
+    },
+    {
+      "name": "test2",
+      "score": 0
+    },
+    {
+      "name": "test3",
+      "score": 0
+    }
+  ],
+  "board": [
+    {
+      "category_name": "c1",
+      "questions": [
+        {
+          "question": "q1c1",
+          "answer": "a1c1"
+        },
+        {
+          "question": "q2c1",
+          "answer": "a2c1"
+        },
+        {
+          "question": "q3c1",
+          "answer": "a3c1"
+        },
+        {
+          "question": "q4c1",
+          "answer": "a4c1"
+        },
+        {
+          "question": "q5c1",
+          "answer": "a5c1"
+        }
+      ]
+    },
+    {
+      "category_name": "c2",
+      "questions": [
+        {
+          "question": "q1c2",
+          "answer": "a1c2"
+        },
+        {
+          "question": "q2c2",
+          "answer": "a2c2"
+        },
+        {
+          "question": "q3c2",
+          "answer": "a3c2"
+        },
+        {
+          "question": "q4c2",
+          "answer": "a4c2"
+        },
+        {
+          "question": "q5c2",
+          "answer": "a5c2"
+        }
+      ]
+    },
+    {
+      "category_name": "c3",
+      "questions": [
+        {
+          "question": "q1c3",
+          "answer": "a1c3"
+        },
+        {
+          "question": "q2c3",
+          "answer": "a2c3"
+        },
+        {
+          "question": "q3c3",
+          "answer": "a3c3"
+        },
+        {
+          "question": "q4c3",
+          "answer": "a4c3"
+        },
+        {
+          "question": "q5c3",
+          "answer": "a5c3"
+        }
+      ]
+    }
+  ],
+  "timer": 60
+}

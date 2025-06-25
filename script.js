@@ -2,6 +2,7 @@ let gameData;
 let currentPlayerIndex = 0;
 let timerInterval;
 let currentTile = null;
+let player_list = [];
 
 document.getElementById('jsonLoader').addEventListener('change', function (e) {
   const reader = new FileReader();
@@ -47,6 +48,15 @@ function renderScoreboard() {
     scoreboard.innerHTML = '<strong>Scores:</strong><br>';
     gameData.players.forEach((player, i) => {
       scoreboard.innerHTML += `${player.name}: ${player.score}<br>`;
+      player_list.push(player);
+    });
+}
+
+function updateScoreboard() {
+    const scoreboard = document.getElementById('scoreboard');
+    scoreboard.innerHTML = '<strong>Scores:</strong><br>';
+    player_list.forEach((player, i) => {
+      scoreboard.innerHTML += `${player.name}: ${player.score}<br>`;
     });
 }
 
@@ -64,14 +74,13 @@ async function questionAnswer(e){
     const q_index = tile.dataset.q_index
     display.style.display = 'flex';
     currQuestionObj = gameData.board[cat_index].questions[q_index];
+    currQuestionVal = (parseInt(q_index) + 1) * 100;
     console.log(currQuestionObj);
     document.getElementById('qa_question').innerText = currQuestionObj.question;
-    startTimer(gameData.timer);
-    currentPlayerIndex = (currentPlayerIndex + 1) % gameData.players.length;
-    updateTurnDisplay();
+    startTimer(gameData.timer, tile);
 }
 
-function startTimer(seconds) {
+function startTimer(seconds, tile) {
   clearInterval(timerInterval); // Clear any existing timer
   const timerEl = document.getElementById("timer");
   let timeLeft = seconds;
@@ -85,15 +94,17 @@ function startTimer(seconds) {
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       timerEl.innerText = "Time's up!";
-      timesUP(); // Call your custom function
+      timesUP(tile); // Call your custom function
     } else {
       timerEl.innerText = `Time left: ${timeLeft}s`;
     }
   }, 1000);
 }
 
-function timesUP() {
+function timesUP(tile) {
+  tile.disabled = false;
   alert("Time's up! You will recieve no points!");
+  document.getElementById("timer").innerText = "";
   closeQA();
 }
 
@@ -104,16 +115,21 @@ function closeQA (){
   document.getElementById("wrong_button").style.display = 'none';
   document.getElementById("correct_button").style.display = 'none';
   document.getElementById("qa_display").style.display = 'none';
+  currentPlayerIndex = (currentPlayerIndex + 1) % gameData.players.length;
+  updateTurnDisplay();
 }
 
 function showAnswer(){
   clearInterval(timerInterval); // stop timer
   document.getElementById("timer").innerText = ""; //clear timer
   document.getElementById('qa_answer').innerText = currQuestionObj.answer;
-  document.getElementById("wrong_button").style.display = 'flex';
-  document.getElementById("correct_button").style.display = 'flex';
+  document.getElementById("wrong_button").style.display = 'inline-block';
+  document.getElementById("correct_button").style.display = 'inline-block';
 }
 
 function correctAnswer() {
-
+  player_list[currentPlayerIndex].score += currQuestionVal;
+  console.log(player_list);
+  updateScoreboard();
+  closeQA();
 }

@@ -16,11 +16,10 @@
       <button onclick="showAnswer()">ShowAnswer</button>
       <button onclick="correctAnswer()" style="display: none;" id="correct_button">Correct</button>
       <button onclick="wrongAnswer()" style="display: none;" id="wrong_button">Wrong</button>
-      <button onclick="closeQA()">Close</button> 
     </div>
   </div>
   <div id="scoreboard"></div>
-
+  <audio id="jeopardyMusic" src="jeopardy-theme-song.mp3" preload="auto"></audio>
   <input type="file" id="jsonLoader" accept=".json" />
   <script src="script.js"></script>
 </body>

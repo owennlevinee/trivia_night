@@ -92,10 +92,53 @@ body {
 }
 
 .qa_content {
-  background: white;
-  color: black;
-  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+  background-color: #1e1e2f;
+  padding: 30px;
   border-radius: 12px;
-  max-width: 80%;
+  max-width: 800px;
+  margin: 50px auto;
   text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
+#qa_question,
+#qa_answer {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Center buttons inside a container */
+.qa_content button {
+  display: inline-block;
+  font-size: 1.25rem;
+  padding: 12px 24px;
+  margin: 10px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(to bottom right, #3b82f6, #2563eb); /* default blue */
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.qa_content button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+.qa_content button:active {
+  transform: scale(0.97);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Correct button - green */
+#correct_button {
+  background: linear-gradient(to bottom right, #10b981, #059669);
+}
+
+/* Wrong button - red */
+#wrong_button {
+  background: linear-gradient(to bottom right, #ef4444, #dc2626);
 }

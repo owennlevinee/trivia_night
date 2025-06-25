@@ -67,18 +67,18 @@ function updateTurnDisplay() {
 }
 
 async function questionAnswer(e){
-    playButtonSound()
-    const display = document.getElementById("qa_display");
-    const tile = e.target;
-    tile.disabled = true;
-    const cat_index = tile.dataset.cat_index
-    const q_index = tile.dataset.q_index
-    display.style.display = 'flex';
-    currQuestionObj = gameData.board[cat_index].questions[q_index];
-    currQuestionVal = (parseInt(q_index) + 1) * 100;
-    console.log(currQuestionObj);
-    document.getElementById('qa_question').innerText = currQuestionObj.question;
-    startTimer(gameData.timer, tile);
+  playButtonSound()
+  const display = document.getElementById("qa_display");
+  const tile = e.target;
+  tile.disabled = true;
+  const cat_index = tile.dataset.cat_index
+  const q_index = tile.dataset.q_index
+  display.style.display = 'flex';
+  currQuestionObj = gameData.board[cat_index].questions[q_index];
+  currQuestionVal = (parseInt(q_index) + 1) * 100;
+  console.log(currQuestionObj);
+  document.getElementById('qa_question').innerText = currQuestionObj.question;
+  startTimer(gameData.timer, tile);
 }
 
 function startTimer(seconds, tile) {
@@ -110,6 +110,9 @@ function timesUP(tile) {
   document.getElementById("jeopardyMusic").pause();
   document.getElementById("jeopardyMusic").currentTime = 0;
   tile.disabled = false;
+  const sound = document.getElementById("wrong_answer");
+  sound.currentTime = 0;
+  sound.play();
   alert("Time's up! You will recieve no points!");
   document.getElementById("timer").innerText = "";
   closeQA();
@@ -124,6 +127,7 @@ function closeQA (){
   document.getElementById("qa_display").style.display = 'none';
   currentPlayerIndex = (currentPlayerIndex + 1) % gameData.players.length;
   updateTurnDisplay();
+  checkWin();
 }
 
 function showAnswer(){
@@ -144,6 +148,7 @@ function correctAnswer() {
   console.log(player_list);
   updateScoreboard();
   closeQA();
+  
 }
 
 function wrongAnswer(){
@@ -159,3 +164,25 @@ function playButtonSound() {
   sound.currentTime = 0; // rewind to start
   sound.play();
 }
+
+function checkWin() {
+  const allTiles = document.querySelectorAll('.question_tile');
+  const totalTiles = allTiles.length;
+  const disabledTiles = Array.from(allTiles).filter(tile => tile.disabled).length;
+  const activeTiles = totalTiles - disabledTiles;
+  const mintiles = totalTiles % player_list.length;
+
+
+  if ((mintiles === 0 && totalTiles === disabledTiles) || (activeTiles === mintiles)) {
+      // Find the player with the highest score
+      let winner = player_list[0];
+      for (let i = 1; i < player_list.length; i++) {
+        if (player_list[i].score > winner.score) {
+          winner = player_list[i];
+        }
+      }
+      alert(`Game Over! 🎉 The winner is ${winner.name} with ${winner.score} points!`);
+    }
+    // Display a site notification (simple alert or custom element)
+    
+  }

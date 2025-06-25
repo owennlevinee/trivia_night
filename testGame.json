@@ -11,6 +11,10 @@
     {
       "name": "test3",
       "score": 0
+    },
+	{
+      "name": "test4",
+      "score": 0
     }
   ],
   "board": [
@@ -90,5 +94,5 @@
       ]
     }
   ],
-  "timer": 60
+  "timer": 10
 }

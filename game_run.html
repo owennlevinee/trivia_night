@@ -13,13 +13,16 @@
     <div class="qa_content">
       <p id="qa_question" class="qa_content"></p>
       <p id="qa_answer" class="qa_content"></p>
-      <button onclick="showAnswer()">ShowAnswer</button>
+      <button onclick="playButtonSound(); showAnswer()">ShowAnswer</button>
       <button onclick="correctAnswer()" style="display: none;" id="correct_button">Correct</button>
       <button onclick="wrongAnswer()" style="display: none;" id="wrong_button">Wrong</button>
     </div>
   </div>
   <div id="scoreboard"></div>
   <audio id="jeopardyMusic" src="jeopardy-theme-song.mp3" preload="auto"></audio>
+  <audio id="buttonSound" src="button-click.mp3" preload="auto"></audio>
+  <audio id="correct_answer" src="correct.mp3" preload="auto"></audio>
+  <audio id="wrong_answer" src="wrong.mp3" preload="auto"></audio>
   <input type="file" id="jsonLoader" accept=".json" />
   <script src="script.js"></script>
 </body>

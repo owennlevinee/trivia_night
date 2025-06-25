@@ -67,6 +67,7 @@ function updateTurnDisplay() {
 }
 
 async function questionAnswer(e){
+    playButtonSound()
     const display = document.getElementById("qa_display");
     const tile = e.target;
     tile.disabled = true;
@@ -85,6 +86,10 @@ function startTimer(seconds, tile) {
   const timerEl = document.getElementById("timer");
   let timeLeft = seconds;
 
+  const music = document.getElementById("jeopardyMusic");
+  music.currentTime = 0;
+  music.play();
+
   // Initial display
   timerEl.innerText = `Time left: ${timeLeft}s`;
 
@@ -102,6 +107,8 @@ function startTimer(seconds, tile) {
 }
 
 function timesUP(tile) {
+  document.getElementById("jeopardyMusic").pause();
+  document.getElementById("jeopardyMusic").currentTime = 0;
   tile.disabled = false;
   alert("Time's up! You will recieve no points!");
   document.getElementById("timer").innerText = "";
@@ -121,6 +128,8 @@ function closeQA (){
 
 function showAnswer(){
   clearInterval(timerInterval); // stop timer
+  document.getElementById("jeopardyMusic").pause();
+  document.getElementById("jeopardyMusic").currentTime = 0;
   document.getElementById("timer").innerText = ""; //clear timer
   document.getElementById('qa_answer').innerText = currQuestionObj.answer;
   document.getElementById("wrong_button").style.display = 'inline-block';
@@ -128,8 +137,25 @@ function showAnswer(){
 }
 
 function correctAnswer() {
+  const sound = document.getElementById("correct_answer");
+  sound.currentTime = 0;
+  sound.play();
   player_list[currentPlayerIndex].score += currQuestionVal;
   console.log(player_list);
   updateScoreboard();
   closeQA();
+}
+
+function wrongAnswer(){
+  const sound = document.getElementById("wrong_answer");
+  sound.currentTime = 0;
+  sound.play();
+
+  closeQA();
+}
+
+function playButtonSound() {
+  const sound = document.getElementById('buttonSound');
+  sound.currentTime = 0; // rewind to start
+  sound.play();
 }

@@ -18,7 +18,7 @@ function renderBoard(){
   const board = document.getElementById('board');
   board.innerHTML = '';
 
-  gameData.board.forEach(category => {
+  gameData.board.forEach((category, cat_index) => {
     const categoryColumn = document.createElement('div');
     categoryColumn.classList.add('category_column');
 
@@ -28,12 +28,12 @@ function renderBoard(){
     categoryHeader.textContent = category.category_name;
     categoryColumn.appendChild(categoryHeader);
     
-    category.questions.forEach((q, index) => {
+    category.questions.forEach((q, q_index) => {
         const tileButton = document.createElement('button');
         tileButton.classList.add('question_tile');
-        tileButton.textContent = `${(index + 1) * 100}`; // 100, 200, etc.
-        tileButton.dataset.category = category.category_name;
-        tileButton.dataset.index = index;
+        tileButton.textContent = `${(q_index + 1) * 100}`; // 100, 200, etc.
+        tileButton.dataset.cat_index = cat_index;
+        tileButton.dataset.q_index = q_index;
         tileButton.addEventListener('click', questionAnswer);
         categoryColumn.appendChild(tileButton);
     });
@@ -59,11 +59,7 @@ function questionAnswer(e){
     const display = document.getElementById("qa_display");
     const tile = e.target;
     tile.disabled = true;
-    const cat = tile.dataset.category
-    const index = tile.dataset.index
-
-    const questionObj = gameData.board[cat].questions[index];
-    display.innerText = questionObj.question
+    display.innerText = gameData.board[tile.dataset.cat_index].questions[tile.dataset.q_index].question;
 
     currentPlayerIndex = (currentPlayerIndex + 1) % gameData.players.length;
     updateTurnDisplay();

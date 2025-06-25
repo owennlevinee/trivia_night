@@ -56,11 +56,14 @@ function updateTurnDisplay() {
 }
 
 function questionAnswer(e){
+    const display = document.getElementById("qa_display");
     const tile = e.target;
     tile.disabled = true;
+    const cat = tile.dataset.category
+    const index = tile.dataset.index
 
-
-
+    const questionObj = gameData.board[cat].questions[index];
+    display.innerText = questionObj.question
 
     currentPlayerIndex = (currentPlayerIndex + 1) % gameData.players.length;
     updateTurnDisplay();
